@@ -29,13 +29,28 @@
   --aura-a:rgba(28,100,240,.20);--aura-b:rgba(124,58,237,.14);--aura-c:rgba(34,211,238,.12);
   --halo:rgba(28,100,240,.16);
 }
-/* ===== AURA CLARA (padrão) ===== */
+/* ===== AURA CLARA · MASCULINA (padrão) =====
+   Psicologia do ramo: grafite/preto = masculinidade, sofisticação, higiene.
+   Superfícies claras COMANDADAS por grafite/preto — dock preta, tinta quase-preta,
+   acento azul profundo. (Modo escuro fica exatamente como está no :root.) */
 html.theme-light{
-  --ink:#F2F5FB;--panel:rgba(255,255,255,.78);--panel-2:#FFFFFF;--line:rgba(16,35,70,.10);
-  --txt:#0E1B33;--muted:#5A6A82;--dim:#93A2B8;--platinum:#122A52;--glass:rgba(255,255,255,.72);
-  --aura-a:rgba(28,100,240,.14);--aura-b:rgba(124,58,237,.09);--aura-c:rgba(34,211,238,.12);
-  --halo:rgba(28,100,240,.12);
+  --ink:#EBEEF3;--panel:rgba(255,255,255,.80);--panel-2:#FFFFFF;--line:rgba(12,16,24,.12);
+  --txt:#0C0F16;--muted:#525C6B;--dim:#8A94A4;--platinum:#10141C;--glass:rgba(255,255,255,.74);
+  /* acento azul profundo — sobrescrito só no claro, não toca no escuro */
+  --gold-1:#8FB4FF;--gold-2:#1550CE;--gold-3:#123FA6;--gold-4:#0C2E7A;--gold-5:#081F55;
+  --aura-a:rgba(21,80,206,.12);--aura-b:rgba(58,66,84,.10);--aura-c:rgba(28,100,240,.10);
+  --halo:rgba(21,80,206,.12);
 }
+/* ===== DOCK PRETA — assinatura masculina do modo claro ===== */
+html.theme-light .side{
+  background:linear-gradient(135deg,rgba(12,15,22,.94),rgba(20,26,38,.92));
+  border-color:rgba(255,255,255,.08);
+  box-shadow:0 18px 50px rgba(8,12,22,.28),inset 0 1px 0 rgba(255,255,255,.06)}
+html.theme-light .side .logo-row .sb{color:rgba(230,236,246,.55)}
+html.theme-light .navgrp{color:rgba(230,236,246,.42);border-left-color:rgba(255,255,255,.12)}
+html.theme-light .nav a{color:rgba(228,234,245,.76)}
+html.theme-light .nav a:hover{color:var(--gold-1);background:rgba(120,160,255,.14)}
+html.theme-light .nav a.active{color:#fff;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));box-shadow:0 8px 20px rgba(21,80,206,.42)}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{font-family:var(--font);color:var(--txt);background:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;letter-spacing:.1px}
@@ -86,7 +101,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold-2);box-shadow:0 
 /* ===== APP · DOCK FLUTUANTE (sem sidebar — assinatura AURA) ===== */
 #app{display:none;min-height:100vh}
 .layout{display:block;min-height:100vh}
-.side{position:sticky;top:14px;z-index:25;margin:14px auto 8px;max-width:1280px;padding:10px 14px;display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;
+.side{position:sticky;top:14px;z-index:25;margin:14px auto 8px;max-width:1280px;padding:10px 14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;row-gap:8px;overflow-x:visible;
   background:var(--glass);backdrop-filter:blur(22px) saturate(1.25);-webkit-backdrop-filter:blur(22px) saturate(1.25);
   border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 44px rgba(15,40,100,.12)}
 .side .logo-row{display:flex;align-items:center;gap:10px;padding:0 10px 0 2px;flex:none}
@@ -94,7 +109,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold-2);box-shadow:0 
 .side .logo-row .sb{font-size:8.5px;color:var(--muted);letter-spacing:2px;white-space:nowrap}
 .navgrp{flex:none;font-size:9px;text-transform:uppercase;letter-spacing:1.6px;color:var(--dim);margin:0 2px 0 10px;border-left:1px solid var(--line);padding-left:12px;line-height:1.1}
 .nav{display:contents}
-.nav a{flex:none;display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:99px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;transition:.16s;cursor:pointer;border:1px solid transparent}
+.nav a{flex:none;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:99px;color:var(--muted);text-decoration:none;font-size:12.5px;font-weight:600;transition:.16s;cursor:pointer;border:1px solid transparent}
 .nav a .ic{font-size:14px}
 .nav a:hover{color:var(--gold-2);background:var(--halo)}
 .nav a.active{color:#fff;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));box-shadow:0 8px 20px var(--halo);border-color:transparent}
