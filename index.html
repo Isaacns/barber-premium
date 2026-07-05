@@ -29,28 +29,19 @@
   --aura-a:rgba(28,100,240,.20);--aura-b:rgba(124,58,237,.14);--aura-c:rgba(34,211,238,.12);
   --halo:rgba(28,100,240,.16);
 }
-/* ===== AURA CLARA · MASCULINA (padrão) =====
-   Psicologia do ramo: grafite/preto = masculinidade, sofisticação, higiene.
-   Superfícies claras COMANDADAS por grafite/preto — dock preta, tinta quase-preta,
-   acento azul profundo. (Modo escuro fica exatamente como está no :root.) */
+/* ===== AURA AZURE (padrão) · escuro suave, azul-céu =====
+   "Não tão escura": base navy suave + acento azul-céu. O toggle alterna para a
+   AURA Noturna (deep, no :root). Escopo só no tema padrão — Noturna fica intacta. */
 html.theme-light{
-  --ink:#EBEEF3;--panel:rgba(255,255,255,.80);--panel-2:#FFFFFF;--line:rgba(12,16,24,.12);
-  --txt:#0C0F16;--muted:#525C6B;--dim:#8A94A4;--platinum:#10141C;--glass:rgba(255,255,255,.74);
-  /* acento azul profundo — sobrescrito só no claro, não toca no escuro */
-  --gold-1:#8FB4FF;--gold-2:#1550CE;--gold-3:#123FA6;--gold-4:#0C2E7A;--gold-5:#081F55;
-  --aura-a:rgba(21,80,206,.12);--aura-b:rgba(58,66,84,.10);--aura-c:rgba(28,100,240,.10);
-  --halo:rgba(21,80,206,.12);
+  --ink:#17233D;--panel:rgba(31,46,76,.72);--panel-2:#22304F;--line:rgba(255,255,255,.09);
+  --txt:#EAF0FA;--muted:#9BB0D0;--dim:#7E93B6;--platinum:#EAF0FA;--glass:rgba(31,46,76,.66);
+  --gold-1:#7FB0FF;--gold-2:#3E82F7;--gold-3:#2C6BE0;--gold-4:#1E56C4;--gold-5:#123F96;
+  --aura-a:rgba(62,130,247,.16);--aura-b:rgba(124,120,255,.10);--aura-c:rgba(42,150,220,.12);
+  --halo:rgba(62,130,247,.16);
 }
-/* ===== DOCK PRETA — assinatura masculina do modo claro ===== */
-html.theme-light .side{
-  background:linear-gradient(135deg,rgba(12,15,22,.94),rgba(20,26,38,.92));
-  border-color:rgba(255,255,255,.08);
-  box-shadow:0 18px 50px rgba(8,12,22,.28),inset 0 1px 0 rgba(255,255,255,.06)}
-html.theme-light .side .logo-row .sb{color:rgba(230,236,246,.55)}
-html.theme-light .navgrp{color:rgba(230,236,246,.42);border-left-color:rgba(255,255,255,.12)}
-html.theme-light .nav a{color:rgba(228,234,245,.76)}
-html.theme-light .nav a:hover{color:var(--gold-1);background:rgba(120,160,255,.14)}
-html.theme-light .nav a.active{color:#fff;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));box-shadow:0 8px 20px rgba(21,80,206,.42)}
+/* badges semânticas legíveis no tema azure (fundo escuro) */
+html.theme-light .badge.b-warn{color:var(--warn)}
+html.theme-light .badge.b-ok{color:var(--ok)}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{font-family:var(--font);color:var(--txt);background:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;letter-spacing:.1px}
@@ -98,22 +89,22 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold-2);box-shadow:0 
 .hint{margin-top:16px;font-size:11.5px;color:var(--muted)}
 .hint b{color:var(--gold-2)}
 
-/* ===== APP · DOCK FLUTUANTE (sem sidebar — assinatura AURA) ===== */
+/* ===== APP · SIDEBAR CLARA (menu lateral — Opção B) ===== */
 #app{display:none;min-height:100vh}
-.layout{display:block;min-height:100vh}
-.side{position:sticky;top:14px;z-index:25;margin:14px auto 8px;max-width:1280px;padding:10px 14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;row-gap:8px;overflow-x:visible;
+.layout{display:flex;align-items:flex-start;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;width:244px;flex:none;z-index:25;display:flex;flex-direction:column;gap:2px;padding:20px 14px 16px;overflow-y:auto;
   background:var(--glass);backdrop-filter:blur(22px) saturate(1.25);-webkit-backdrop-filter:blur(22px) saturate(1.25);
-  border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 44px rgba(15,40,100,.12)}
-.side .logo-row{display:flex;align-items:center;gap:10px;padding:0 10px 0 2px;flex:none}
+  border-right:1px solid var(--line);box-shadow:0 0 46px rgba(0,0,0,.14)}
+.side .logo-row{display:flex;align-items:center;gap:10px;padding:2px 8px 14px;margin-bottom:6px;border-bottom:1px solid var(--line);flex:none}
 .side .logo-row .nm{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.2px;background:linear-gradient(135deg,var(--gold-2),#7C3AED 140%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
 .side .logo-row .sb{font-size:8.5px;color:var(--muted);letter-spacing:2px;white-space:nowrap}
-.navgrp{flex:none;font-size:9px;text-transform:uppercase;letter-spacing:1.6px;color:var(--dim);margin:0 2px 0 10px;border-left:1px solid var(--line);padding-left:12px;line-height:1.1}
-.nav{display:contents}
-.nav a{flex:none;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:99px;color:var(--muted);text-decoration:none;font-size:12.5px;font-weight:600;transition:.16s;cursor:pointer;border:1px solid transparent}
-.nav a .ic{font-size:14px}
+.navgrp{font-size:9px;text-transform:uppercase;letter-spacing:1.6px;color:var(--dim);margin:14px 10px 4px;padding-left:6px;line-height:1.1;font-weight:700}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:11px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;transition:.16s;cursor:pointer;border:1px solid transparent}
+.nav a .ic{font-size:15px;width:18px;text-align:center}
 .nav a:hover{color:var(--gold-2);background:var(--halo)}
 .nav a.active{color:#fff;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));box-shadow:0 8px 20px var(--halo);border-color:transparent}
-.main{max-width:1280px;margin:0 auto;padding:14px 22px 46px;min-width:0;position:relative;z-index:2}
+.main{flex:1;max-width:1180px;margin:0 auto;padding:18px 30px 46px;min-width:0;position:relative;z-index:2}
 .topbar{display:flex;align-items:center;gap:14px;margin:10px 0 20px}
 .topbar h1{font-family:var(--display);font-weight:700;font-size:26px;margin:0;letter-spacing:-.4px}
 .topbar .sp{flex:1}
@@ -122,7 +113,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold-2);box-shadow:0 
 .avatar{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-family:var(--display);box-shadow:0 8px 20px var(--halo)}
 .theme-toggle{width:40px;height:40px;border-radius:14px;border:1px solid var(--line);background:var(--panel-2);color:var(--muted);font-size:16px;cursor:pointer;transition:.18s;display:flex;align-items:center;justify-content:center}
 .theme-toggle:hover{color:var(--gold-2);border-color:var(--gold-2);box-shadow:0 0 0 4px var(--halo)}
-.menu-btn{display:none}
+.menu-btn{display:none;width:40px;height:40px;border-radius:14px;border:1px solid var(--line);background:var(--panel-2);color:var(--txt);font-size:18px;cursor:pointer;align-items:center;justify-content:center}
 
 /* ===== KPIs com halo AURA ===== */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px;margin-bottom:20px}
@@ -207,8 +198,11 @@ html:not(.theme-light) .badge.b-ok{color:var(--ok)}
 
 @media(max-width:860px){
   .grid2,.frow{grid-template-columns:1fr}
-  .side{margin:10px;border-radius:16px}
-  .navgrp{display:none}
+  .layout{display:block}
+  .side{position:fixed;top:0;left:0;height:100vh;width:250px;transform:translateX(-100%);transition:transform .22s ease;border-right:1px solid var(--line);border-radius:0;z-index:60}
+  .side.open{transform:none;box-shadow:0 0 60px rgba(0,0,0,.45)}
+  .menu-btn{display:inline-flex}
+  .main{padding:14px 16px 40px}
   .search{width:130px}
   .topbar h1{font-size:21px}
 }
@@ -284,7 +278,7 @@ footer b{color:var(--gold-2)}
         <div class="avatar" id="avatar">BP</div>
       </div>
       <div id="view"></div>
-      <footer>Vizio Barber <b>v0.3.0 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
+      <footer>Vizio Barber <b>v0.5.0 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
     </main>
    </div>
   </section>
@@ -319,6 +313,10 @@ footer b{color:var(--gold-2)}
       x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fillStyle=col+s.o+')';x.fill();}
     requestAnimationFrame(loop);})();
 })();
+</script>
+<script>
+/* mobile: fecha a sidebar ao escolher um item */
+(function(){var s=document.getElementById('side');if(s)s.addEventListener('click',function(e){if(e.target.closest('.nav a'))s.classList.remove('open');});})();
 </script>
 </body>
 </html>

@@ -3,36 +3,8 @@
    Depende de dados.js (DADOS, AG_STATUS). Estado em memória
    (cópia de sessão). No go-live, persistência via backend.
    ============================================================ */
-/* ===== emblema (logo viva) — símbolo VIZIO BARBER v3 =====
-   Vetorial, afiado e reativo ao tema (platina no escuro · grafite quase-preto no claro).
-   White-label preservado: se houver marca de cliente (Camaleão), usa a logo dela. */
-function emblemSVG(){
-  var L=(window.BRAND_LOGO||'vizio-symbol.png');
-  if(window.__brandCustom){
-    return '<svg viewBox="0 0 100 100" width="100%" height="100%" style="max-width:110px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image x="1" y="1" width="98" height="98" href="'+L+'" xlink:href="'+L+'"/></svg>';
-  }
-  var light=document.documentElement.classList.contains('theme-light');
-  var m1=light?'#232B3A':'#F4F8FF', m2=light?'#0A0D14':'#B9CADF', ac=light?'#123FA6':'#5AA0FF';
-  var u=(emblemSVG._n=(emblemSVG._n||0)+1);
-  return '<svg viewBox="0 0 100 100" width="100%" height="100%" style="max-width:110px" xmlns="http://www.w3.org/2000/svg">'
-   +'<defs><linearGradient id="mt'+u+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+m1+'"/><stop offset="1" stop-color="'+m2+'"/></linearGradient></defs>'
-   +'<circle cx="50" cy="50" r="47" fill="none" stroke="'+ac+'" stroke-opacity=".30" stroke-width="1.3"/>'
-   +'<circle cx="50" cy="50" r="43.5" fill="none" stroke="'+ac+'" stroke-opacity=".15" stroke-width="1"/>'
-   +'<g transform="rotate(-3 50 71)"><path d="M28 69 L60 67.5 L62 71 L60 74.5 L30 73 Z" fill="url(#mt'+u+')"/>'
-     +'<rect x="60" y="67.5" width="14" height="6.6" rx="3.3" fill="none" stroke="url(#mt'+u+')" stroke-width="2.6"/>'
-     +'<circle cx="61.5" cy="71" r="1.5" fill="'+ac+'"/></g>'
-   +'<g fill="none" stroke="url(#mt'+u+')" stroke-width="3.2" stroke-linecap="round">'
-     +'<path d="M50 53 L59.5 74"/><path d="M50 53 L40.5 74"/>'
-     +'<circle cx="59.5" cy="80" r="5.4"/><circle cx="40.5" cy="80" r="5.4"/></g>'
-   +'<g fill="url(#mt'+u+')">'
-     +'<path d="M63.5 15.0 L45.1 51.3 L50.0 53.0 L54.9 54.7 Z"/>'
-     +'<path d="M36.5 15.0 L45.1 54.7 L50.0 53.0 L54.9 51.3 Z"/></g>'
-   +'<g stroke="#FFFFFF" stroke-opacity=".5" stroke-width="1" fill="none" stroke-linecap="round">'
-     +'<path d="M63.5 15 L51 52"/><path d="M36.5 15 L49 52"/></g>'
-   +'<circle cx="50" cy="53" r="3.4" fill="'+m2+'" stroke="'+ac+'" stroke-width="1.4"/>'
-   +'<rect x="47.5" y="88.5" width="5" height="5" transform="rotate(45 50 91)" fill="'+ac+'"/>'
-   +'</svg>';
-}
+/* ===== emblema (logo viva) — logo oficial VIZIO (PNG por tema, white-label Camaleão) ===== */
+function emblemSVG(){var L=(window.BRAND_LOGO||'vizio-symbol.png');return '<svg viewBox="0 0 100 100" width="100%" height="100%" style="max-width:110px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image x="1" y="1" width="98" height="98" href="'+L+'" xlink:href="'+L+'"/></svg>';}
 
 /* ===== estado ===== */
 let WORK = JSON.parse(JSON.stringify(DADOS));
