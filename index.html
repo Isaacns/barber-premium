@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="theme-light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Barber Premium · Gestão premium para barbearias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   BARBER PREMIUM · TEMA AURA (DNA INPERSON/VIZIO)
+   Padrão claro "AURA Clara" (porcelana + azul #1C64F0) e
+   alternativo "AURA Noturna". Efeitos: aura respirando,
+   partículas vivas, brilho que segue o cursor, halos.
+   ============================================================ */
+:root{
+  /* escala de acento (Camaleão troca via theme.js) */
+  --gold-1:#A8C6FF;--gold-2:#1C64F0;--gold-3:#1656D6;--gold-4:#0F3E9E;--gold-5:#0A2A6E;
+  /* AURA Noturna (base) */
+  --ink:#070B16;--panel:rgba(14,20,34,.66);--panel-2:#0B101C;--line:rgba(120,150,220,.14);
+  --txt:#E8EEF8;--muted:#8A94A6;--dim:#5B6781;--platinum:#DCE6F5;--glass:rgba(14,20,34,.6);
+  --font:'Inter',system-ui,sans-serif;--display:'Sora',var(--font);
+  --ok:#16B981;--warn:#E0A100;--bad:#EF4444;--info:#5AA0FF;
+  --aura-a:rgba(28,100,240,.20);--aura-b:rgba(124,58,237,.14);--aura-c:rgba(34,211,238,.12);
+  --halo:rgba(28,100,240,.16);--star:rgba(120,170,255,;
+}
+/* ===== AURA CLARA (padrão) ===== */
+html.theme-light{
+  --ink:#F2F5FB;--panel:rgba(255,255,255,.78);--panel-2:#FFFFFF;--line:rgba(16,35,70,.10);
+  --txt:#0E1B33;--muted:#5A6A82;--dim:#93A2B8;--platinum:#122A52;--glass:rgba(255,255,255,.72);
+  --aura-a:rgba(28,100,240,.14);--aura-b:rgba(124,58,237,.09);--aura-c:rgba(34,211,238,.12);
+  --halo:rgba(28,100,240,.12);--star:rgba(28,100,240,;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:var(--font);color:var(--txt);background:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;letter-spacing:.1px}
+a{color:inherit}
+/* scrollbar invisível (padrão INPERSON/VIZIO — a rolagem continua funcionando) */
+*::-webkit-scrollbar{width:0;height:0;background:transparent}
+*{scrollbar-width:none;-ms-overflow-style:none}
+
+/* ===== AURA — fundo vivo com respiração (Sistema INPERSON) ===== */
+.aura{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(62vw 62vw at 16% -12%, var(--aura-a), transparent 62%),
+  radial-gradient(52vw 52vw at 112% 8%, var(--aura-b), transparent 60%),
+  radial-gradient(46vw 46vw at 50% 118%, var(--aura-c), transparent 62%);
+  animation:aurabr 9s ease-in-out infinite}
+@keyframes aurabr{0%,100%{opacity:.72;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+#cursor-glow{position:fixed;width:380px;height:380px;border-radius:50%;pointer-events:none;z-index:1;transform:translate(-50%,-50%);transition:opacity .4s;opacity:0;background:radial-gradient(circle,var(--halo),transparent 62%)}
+
+/* ===== LOGO viva + anéis de aura ===== */
+.emblem{display:inline-block;line-height:0;animation:breathe 4.5s ease-in-out infinite;filter:drop-shadow(0 10px 26px rgba(15,62,158,.22))}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.aurl{position:relative;display:inline-grid;place-items:center}
+.aurl::before,.aurl::after{content:"";position:absolute;border-radius:50%;border:1.5px solid var(--gold-2);opacity:0;animation:ring 3.6s ease-out infinite}
+.aurl::after{animation-delay:1.8s}
+@keyframes ring{0%{width:70%;height:70%;opacity:.5}100%{width:150%;height:150%;opacity:0}}
+
+/* ===== base de formulário ===== */
+label{display:block;text-align:left;font-size:12px;color:var(--muted);margin:14px 0 6px;letter-spacing:.3px;font-weight:600}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel-2);color:var(--txt);font-size:14px;font-family:var(--font);outline:none;transition:.18s;box-shadow:inset 0 1px 2px rgba(16,35,70,.04)}
+textarea{resize:vertical;min-height:66px}
+input:focus,select:focus,textarea:focus{border-color:var(--gold-2);box-shadow:0 0 0 4px var(--halo)}
+.pw-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:15px;color:var(--muted);padding:4px;line-height:1}
+
+/* ===== LOGIN ===== */
+.wrap{position:relative;z-index:2;min-height:100%}
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card-glass{background:var(--glass);backdrop-filter:blur(24px) saturate(1.2);-webkit-backdrop-filter:blur(24px) saturate(1.2);border:1px solid var(--line);border-radius:24px;box-shadow:0 24px 70px rgba(15,40,100,.14),inset 0 1px 0 rgba(255,255,255,.5)}
+.login-card{width:100%;max-width:410px;padding:40px 36px;text-align:center}
+.brand-name{font-family:var(--display);font-weight:800;font-size:27px;letter-spacing:.5px;margin:16px 0 2px;background:linear-gradient(135deg,var(--gold-2),#7C3AED 130%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand-sub{color:var(--muted);font-size:11.5px;letter-spacing:3.5px;text-transform:uppercase;margin-bottom:22px}
+.seal{margin-top:16px;font-size:11px;color:var(--muted);letter-spacing:1px}
+.seal b{color:var(--gold-2);font-weight:700}
+.btn{width:100%;margin-top:22px;padding:14px;border:none;border-radius:13px;cursor:pointer;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.5px;color:#fff;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));box-shadow:0 10px 26px var(--halo);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(28,100,240,.3)}
+.hint{margin-top:16px;font-size:11.5px;color:var(--muted)}
+.hint b{color:var(--gold-2)}
+
+/* ===== APP · DOCK FLUTUANTE (sem sidebar — assinatura AURA) ===== */
+#app{display:none;min-height:100vh}
+.layout{display:block;min-height:100vh}
+.side{position:sticky;top:14px;z-index:25;margin:14px auto 8px;max-width:1280px;padding:10px 14px;display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;
+  background:var(--glass);backdrop-filter:blur(22px) saturate(1.25);-webkit-backdrop-filter:blur(22px) saturate(1.25);
+  border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 44px rgba(15,40,100,.12)}
+.side .logo-row{display:flex;align-items:center;gap:10px;padding:0 10px 0 2px;flex:none}
+.side .logo-row .nm{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.2px;background:linear-gradient(135deg,var(--gold-2),#7C3AED 140%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+.side .logo-row .sb{font-size:8.5px;color:var(--muted);letter-spacing:2px;white-space:nowrap}
+.navgrp{flex:none;font-size:9px;text-transform:uppercase;letter-spacing:1.6px;color:var(--dim);margin:0 2px 0 10px;border-left:1px solid var(--line);padding-left:12px;line-height:1.1}
+.nav{display:contents}
+.nav a{flex:none;display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:99px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;transition:.16s;cursor:pointer;border:1px solid transparent}
+.nav a .ic{font-size:14px}
+.nav a:hover{color:var(--gold-2);background:var(--halo)}
+.nav a.active{color:#fff;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));box-shadow:0 8px 20px var(--halo);border-color:transparent}
+.main{max-width:1280px;margin:0 auto;padding:14px 22px 46px;min-width:0;position:relative;z-index:2}
+.topbar{display:flex;align-items:center;gap:14px;margin:10px 0 20px}
+.topbar h1{font-family:var(--display);font-weight:700;font-size:26px;margin:0;letter-spacing:-.4px}
+.topbar .sp{flex:1}
+.search{background:var(--panel-2);border:1px solid var(--line);border-radius:99px;padding:10px 18px;color:var(--txt);font-size:13px;width:230px;outline:none;box-shadow:inset 0 1px 2px rgba(16,35,70,.04)}
+.search:focus{border-color:var(--gold-2);box-shadow:0 0 0 4px var(--halo)}
+.avatar{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-family:var(--display);box-shadow:0 8px 20px var(--halo)}
+.theme-toggle{width:40px;height:40px;border-radius:14px;border:1px solid var(--line);background:var(--panel-2);color:var(--muted);font-size:16px;cursor:pointer;transition:.18s;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--gold-2);border-color:var(--gold-2);box-shadow:0 0 0 4px var(--halo)}
+.menu-btn{display:none}
+
+/* ===== KPIs com halo AURA ===== */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px;margin-bottom:20px}
+.kpi{padding:20px 20px 18px;border-radius:20px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);position:relative;overflow:hidden;transition:.22s;box-shadow:0 8px 30px rgba(15,40,100,.07);animation:riseIn .5s ease both}
+.kpi::after{content:"";position:absolute;right:-34px;top:-34px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,var(--halo),transparent 70%)}
+.kpi:hover{transform:translateY(-3px);box-shadow:0 18px 44px rgba(15,40,100,.14);border-color:var(--gold-1)}
+.kpi .lbl{font-size:10.5px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-weight:700}
+.kpi .val{font-family:var(--display);font-weight:700;font-size:30px;letter-spacing:-.8px;margin-top:13px;line-height:1;color:var(--platinum);font-variant-numeric:tabular-nums}
+.kpi .dt{font-size:11.5px;margin-top:11px;color:var(--muted)}
+.kpi .dt.up{color:var(--ok)}.kpi .dt.down{color:var(--bad)}
+@keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ===== painéis / grid ===== */
+.grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+.panel{padding:20px;border-radius:20px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);margin-bottom:16px;box-shadow:0 8px 30px rgba(15,40,100,.07);animation:riseIn .5s ease both}
+.panel h3{font-family:var(--display);font-weight:700;font-size:15.5px;margin:0 0 14px;letter-spacing:-.1px;display:flex;align-items:center;gap:8px}
+.panel .head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.panel .head h3{margin:0}
+.panel .head .sp{flex:1}
+
+/* ===== botões ===== */
+.b{border:none;border-radius:99px;cursor:pointer;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.2px;padding:10px 17px;color:#fff;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));box-shadow:0 8px 20px var(--halo);transition:.18s}
+.b:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(28,100,240,.28)}
+.b-ghost{background:var(--panel-2);color:var(--gold-2);border:1px solid var(--line);box-shadow:none}
+.b-ghost:hover{border-color:var(--gold-2);box-shadow:0 0 0 4px var(--halo)}
+.b-sm{padding:7px 12px;font-size:12px}
+.b-danger{background:var(--panel-2);color:var(--bad);border:1px solid rgba(239,68,68,.35);box-shadow:none}
+.b-danger:hover{background:rgba(239,68,68,.08);box-shadow:none}
+
+/* ===== tabela ===== */
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;color:var(--muted);font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.tbl td{padding:12px;border-bottom:1px solid var(--line)}
+.tbl tbody tr{transition:.12s}
+.tbl tbody tr:hover{background:var(--halo)}
+
+/* ===== badges com dot pulsante (DNA INPERSON) ===== */
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 11px;border-radius:99px;white-space:nowrap;border:1px solid}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.badge.b-info{color:var(--gold-2);border-color:var(--gold-1);background:var(--halo)}
+.badge.b-warn{color:#B07E00;border-color:rgba(224,161,0,.4);background:rgba(224,161,0,.1)}
+.badge.b-ok{color:#0C8F66;border-color:rgba(22,185,129,.4);background:rgba(22,185,129,.1)}
+.badge.b-bad{color:var(--bad);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.badge.b-dim{color:var(--dim);border-color:var(--line);background:var(--panel-2)}
+html:not(.theme-light) .badge.b-warn{color:var(--warn)}
+html:not(.theme-light) .badge.b-ok{color:var(--ok)}
+
+.bar{height:7px;border-radius:6px;background:rgba(28,100,240,.1);overflow:hidden;margin-top:7px}
+.bar>i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--gold-2),#7C3AED 160%);animation:fb 1.2s ease}
+@keyframes fb{from{width:0}}
+
+/* ===== linhas "vivas" (listas) ===== */
+.veh{display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:16px;background:var(--panel-2);border:1px solid var(--line);margin-bottom:10px;transition:.16s;cursor:pointer}
+.veh:hover{border-color:var(--gold-1);box-shadow:0 8px 22px rgba(15,40,100,.1);transform:translateY(-1px)}
+.veh .info{flex:1;min-width:0}
+.veh .info .t{font-size:13.5px;font-weight:700}
+.veh .info .s{font-size:11.5px;color:var(--muted);margin-top:2px}
+.stage{font-size:11px;color:var(--gold-2);white-space:nowrap;font-weight:700;text-align:right}
+.alert{display:flex;gap:11px;padding:12px 13px;border-radius:14px;background:var(--panel-2);border:1px solid var(--line);border-left:3px solid var(--gold-2);margin-bottom:9px}
+.alert .ai{font-size:16px}.alert .at{font-size:12.8px;line-height:1.5}.alert .at b{color:var(--gold-2)}
+.hourchip{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-weight:800;font-size:12.5px;background:var(--halo);border:1px solid var(--gold-1);padding:6px 11px;border-radius:99px;letter-spacing:.5px;color:var(--gold-2)}
+
+/* ===== modal ===== */
+.modal-bg{position:fixed;inset:0;z-index:50;background:rgba(14,27,51,.32);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px}
+.modal{width:100%;max-width:520px;max-height:90vh;overflow:auto;background:var(--panel-2);border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:0 30px 80px rgba(15,40,100,.25)}
+.modal h3{font-family:var(--display);font-size:19px;margin:0 0 4px;color:var(--gold-2)}
+.modal .msub{color:var(--muted);font-size:12.5px;margin-bottom:16px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mact{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
+
+/* ===== ÁREA DO CLIENTE (portal AURA) ===== */
+#portal{position:relative;z-index:2;min-height:100vh;display:none;align-items:flex-start;justify-content:center;padding:30px 18px}
+.pcard{width:100%;max-width:620px}
+.phead{text-align:center;margin-bottom:20px}
+.pbrand{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.5px;background:linear-gradient(135deg,var(--gold-2),#7C3AED 140%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:10px}
+.pbig{text-align:center;padding:26px}
+.pbig .stt{font-family:var(--display);font-size:23px;color:var(--gold-2);font-weight:800;margin-bottom:4px}
+.pnext{padding:22px;text-align:center;border-radius:20px;margin-bottom:14px;background:linear-gradient(135deg,var(--halo),transparent 70%),var(--glass);border:1px solid var(--gold-1);animation:pglow 2.6s ease-in-out infinite;backdrop-filter:blur(14px)}
+@keyframes pglow{0%,100%{box-shadow:0 0 0 0 var(--halo)}50%{box-shadow:0 0 40px 6px var(--halo)}}
+.star{font-size:26px;cursor:pointer;transition:.15s;filter:grayscale(1);opacity:.4}
+.star.on{filter:none;opacity:1;transform:scale(1.15)}
+
+@media(max-width:860px){
+  .grid2,.frow{grid-template-columns:1fr}
+  .side{margin:10px;border-radius:16px}
+  .navgrp{display:none}
+  .search{width:130px}
+  .topbar h1{font-size:21px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.aura{animation:none}}
+footer{margin-top:28px;text-align:center;font-size:11px;color:var(--dim);letter-spacing:.5px}
+footer b{color:var(--gold-2)}
+</style>
+</head>
+<body>
+<div class="aura"></div>
+<canvas id="stars"></canvas>
+<div id="cursor-glow"></div>
+<div class="wrap">
+  <section id="login">
+    <div class="card-glass login-card">
+      <div class="aurl"><div class="emblem" id="emblemLogin"></div></div>
+      <div class="brand-name">BARBER PREMIUM</div>
+      <div class="brand-sub">Gestão premium para barbearias</div>
+      <form onsubmit="entrar(event)">
+        <label>Usuário</label><input id="user" value="admin" autocomplete="off">
+        <label>Senha</label>
+        <div style="position:relative">
+          <input id="pass" type="password" value="" autocomplete="current-password" style="padding-right:44px">
+          <button type="button" class="pw-eye" onclick="var p=document.getElementById('pass');p.type=(p.type==='password'?'text':'password');this.textContent=(p.type==='password'?'👁':'🙈')" aria-label="Mostrar/ocultar senha">👁</button>
+        </div>
+        <button class="btn" type="submit">ENTRAR</button>
+      </form>
+      <div class="hint">Demo — perfis: <b>admin</b> · <b>gerente</b> · <b>barbeiro</b> · <b>cliente</b> (senha livre)</div>
+      <div class="seal">powered by <b>Barber Premium</b> · VIZIO — um produto INPERSON</div>
+    </div>
+  </section>
+
+  <section id="app">
+   <div class="layout">
+    <div class="side" id="side">
+      <div class="logo-row"><div class="emblem" id="emblemSide" style="width:34px"></div>
+        <div><div class="nm">Barber Premium</div><div class="sb">VIZIO · INPERSON</div></div></div>
+      <div class="navgrp">Operação</div>
+      <nav class="nav" id="nav">
+        <a class="active" data-m="home"><span class="ic">◈</span>Início</a>
+        <a data-m="agenda"><span class="ic">🗓</span>Agenda</a>
+        <a data-m="clientes"><span class="ic">🤝</span>Clientes</a>
+        <a data-m="servicos"><span class="ic">✂️</span>Serviços</a>
+        <a data-m="barbeiros"><span class="ic">💈</span>Barbeiros</a>
+      </nav>
+      <div class="navgrp">Gestão</div>
+      <nav class="nav">
+        <a data-m="estoque"><span class="ic">📦</span>Estoque</a>
+        <a data-m="shop"><span class="ic">🛍</span>SHOP</a>
+        <a data-m="financeiro"><span class="ic">💳</span>Financeiro</a>
+        <a data-m="nfe"><span class="ic">🧾</span>Nota Fiscal</a>
+      </nav>
+      <div class="navgrp">Inteligência</div>
+      <nav class="nav">
+        <a data-m="dash"><span class="ic">📊</span>Dashboard</a>
+        <a data-m="alavancagem"><span class="ic">🚀</span>Alavancagem</a>
+        <a data-m="relatorios"><span class="ic">📄</span>Relatórios</a>
+      </nav>
+      <div class="navgrp">Sistema</div>
+      <nav class="nav">
+        <a onclick="abrirBemEstar()"><span class="ic">🌿</span>Bem-estar</a>
+        <a onclick="abrirRBAC()"><span class="ic">👥</span>Acessos</a>
+        <a onclick="abrirMarca()"><span class="ic">🦎</span>Identidade</a>
+        <a onclick="sair()"><span class="ic">⏻</span>Sair</a>
+      </nav>
+    </div>
+    <main class="main">
+      <div class="topbar">
+        <button class="menu-btn" onclick="document.getElementById('side').classList.toggle('open')">☰</button>
+        <h1 id="pageTitle">Início</h1><div class="sp"></div>
+        <input class="search" id="q" placeholder="Buscar…" oninput="onSearch()">
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="AURA Clara ↔ AURA Noturna" aria-label="Alternar tema">◐</button>
+        <div class="avatar" id="avatar">BP</div>
+      </div>
+      <div id="view"></div>
+      <footer>Barber Premium <b>v0.2.0 · AURA</b> · O seu negócio na palma da mão. — VIZIO, um produto <b>INPERSON</b></footer>
+    </main>
+   </div>
+  </section>
+</div>
+<div id="modal-root"></div>
+<div id="portal"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="dados.js"></script>
+<script src="app.js"></script>
+<script src="gestao.js"></script>
+<script src="app-crud.js"></script>
+<script src="bemestar.js"></script>
+<script src="rbac.js"></script>
+<script src="theme.js"></script>
+<script>
+/* ===== AURA · partículas vivas (padrão Sistema INPERSON, adaptado) ===== */
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var c=document.getElementById('stars'); if(!c)return;
+  var x=c.getContext('2d'),w,h,p;
+  function rs(){w=c.width=innerWidth;h=c.height=innerHeight;
+    p=Array.from({length:Math.min(70,(w*h)/24000)},function(){return {
+      x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4+.3,
+      s:Math.random()*.35+.08,o:Math.random()*.4+.12};});}
+  rs();addEventListener('resize',rs);
+  function star(){ // cor via CSS var (--star) — muda com o tema
+    return (getComputedStyle(document.documentElement).getPropertyValue('--star')||'rgba(28,100,240,').trim();}
+  (function loop(){x.clearRect(0,0,w,h);var col=star();
+    for(var i=0;i<p.length;i++){var s=p[i];s.y-=s.s;
+      if(s.y<0){s.y=h;s.x=Math.random()*w;}
+      x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fillStyle=col+s.o+')';x.fill();}
+    requestAnimationFrame(loop);})();
+})();
+</script>
+</body>
+</html>
