@@ -26,14 +26,14 @@
   --font:'Inter',system-ui,sans-serif;--display:'Sora',var(--font);
   --ok:#16B981;--warn:#E0A100;--bad:#EF4444;--info:#5AA0FF;
   --aura-a:rgba(28,100,240,.20);--aura-b:rgba(124,58,237,.14);--aura-c:rgba(34,211,238,.12);
-  --halo:rgba(28,100,240,.16);--star:rgba(120,170,255,;
+  --halo:rgba(28,100,240,.16);
 }
 /* ===== AURA CLARA (padrão) ===== */
 html.theme-light{
   --ink:#F2F5FB;--panel:rgba(255,255,255,.78);--panel-2:#FFFFFF;--line:rgba(16,35,70,.10);
   --txt:#0E1B33;--muted:#5A6A82;--dim:#93A2B8;--platinum:#122A52;--glass:rgba(255,255,255,.72);
   --aura-a:rgba(28,100,240,.14);--aura-b:rgba(124,58,237,.09);--aura-c:rgba(34,211,238,.12);
-  --halo:rgba(28,100,240,.12);--star:rgba(28,100,240,;
+  --halo:rgba(28,100,240,.12);
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
@@ -295,8 +295,8 @@ footer b{color:var(--gold-2)}
       x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4+.3,
       s:Math.random()*.35+.08,o:Math.random()*.4+.12};});}
   rs();addEventListener('resize',rs);
-  function star(){ // cor via CSS var (--star) — muda com o tema
-    return (getComputedStyle(document.documentElement).getPropertyValue('--star')||'rgba(28,100,240,').trim();}
+  function star(){ // cor conforme o tema (AURA Clara = azul VIZIO · Noturna = azul claro)
+    return document.documentElement.classList.contains('theme-light')?'rgba(28,100,240,':'rgba(120,170,255,';}
   (function loop(){x.clearRect(0,0,w,h);var col=star();
     for(var i=0;i<p.length;i++){var s=p[i];s.y-=s.s;
       if(s.y<0){s.y=h;s.x=Math.random()*w;}
