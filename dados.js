@@ -8,7 +8,7 @@ const AG_STATUS = ["Pendente","Confirmado","Atrasado","Em atendimento","Concluí
 const DADOS = {
   _meta:{ gerado:"2026-07-05", fonte:"VIZIO-briefing-Sistema-de-Gerenciamento-de-Barbearia.md", versao:"0.1.0" },
   _cfg:{
-    produto:"Barber Premium", barbearia:"Barbearia Demonstração",
+    produto:"Vizio Barber", barbearia:"Barbearia Demonstração",
     tagline:"Gestão premium para barbearias",
     descontoAntecipadoPct:10,      // incentivo por pagamento antecipado (garante o caixa)
     descontoCadastroPct:5,         // "cadastre-se e ganhe 5% no primeiro serviço"

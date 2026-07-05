@@ -1,5 +1,5 @@
 /* ============================================================
-   Barber Premium · VIZIO — app.js (núcleo)
+   Vizio Barber (ex-Barber Premium) — app.js (núcleo)
    Depende de dados.js (DADOS, AG_STATUS). Estado em memória
    (cópia de sessão). No go-live, persistência via backend.
    ============================================================ */
@@ -347,7 +347,7 @@ function renderPortalCliente(cid){
      '<div class="card-glass" style="padding:18px;margin-bottom:14px"><h3 style="margin:0 0 12px;font-family:var(--display);font-size:16px">💈 Suas últimas visitas</h3>'+(histRows||'<div style="color:var(--muted);font-size:13px">Sua primeira visita ainda está por vir. 😉</div>')+'</div>'+
      '<div class="card-glass" style="padding:18px;margin-bottom:14px"><h3 style="margin:0 0 12px;font-family:var(--display);font-size:16px">🛍 SHOP — pague aqui, retire na unidade</h3>'+shopCards+(pedRows?'<div style="margin-top:12px">'+pedRows+'</div>':'')+'</div>'+
      '<div style="display:flex;justify-content:center;margin:10px 0 20px"><button class="b b-ghost b-sm" onclick="sair()">Sair</button></div>'+
-     '<footer>'+esc(WORK._cfg.barbearia)+' · Barber Premium — VIZIO, um produto <b>INPERSON</b></footer>'+
+     '<footer>'+esc(WORK._cfg.barbearia)+' · Vizio Barber — um produto <b>INPERSON</b></footer>'+
    '</div>';
   const ep=document.getElementById('emblemP'); if(ep){ep.innerHTML=emblemSVG(); if(ep.firstElementChild)ep.firstElementChild.style.maxWidth='76px';}
 }

@@ -1,11 +1,11 @@
 /* ============================================================
-   Barber Premium · VIZIO — theme.js (White-label / Camaleão)
+   Vizio Barber · VIZIO — theme.js (White-label / Camaleão)
    Aplica a identidade de cada barbearia (cor de acento, logo, nome).
    Padrão = VIZIO. Cada barbearia veste a própria marca (multi-tenant).
    Persistência local no piloto (bp_brand_v1); no go-live, backend.
    Depende de app.js (emblemSVG, toast, modal). Tema claro/escuro incluso.
    ============================================================ */
-const VIZIO_BRAND={nome:"Barber Premium",accent:"#5aa0ff",logo:"vizio-symbol.png"};
+const VIZIO_BRAND={nome:"Vizio Barber",accent:"#5aa0ff",logo:"vizio-symbol.png"};
 const BKEY="bp_brand_v1";
 /* logo VIZIO por tema: clara (traços claros) no escuro; navy no fundo branco */
 function vizioLogo(){ return document.documentElement.classList.contains('theme-light')?'vizio-symbol-light.png':'vizio-symbol.png'; }
@@ -36,8 +36,8 @@ function applyTheme(b){
   window.BRAND_NAME=b.nome||VIZIO_BRAND.nome;
   if(typeof WORK!=='undefined'&&WORK._cfg&&b.nome)WORK._cfg.barbearia=b.nome;
   reRenderEmblems();
-  var bn=document.querySelector('.brand-name'); if(bn)bn.textContent=(window.BRAND_NAME||'Barber Premium').toUpperCase();
-  var nm=document.querySelector('.side .logo-row .nm'); if(nm)nm.textContent=window.BRAND_NAME||'Barber Premium';
+  var bn=document.querySelector('.brand-name'); if(bn)bn.textContent=(window.BRAND_NAME||'Vizio Barber').toUpperCase();
+  var nm=document.querySelector('.side .logo-row .nm'); if(nm)nm.textContent=window.BRAND_NAME||'Vizio Barber';
 }
 window.applyTheme=applyTheme;
 
@@ -52,7 +52,7 @@ function abrirMarca(){
 window.abrirMarca=abrirMarca;
 
 function renderMarca(){
-  var nome=window.BRAND_NAME||"Barber Premium";
+  var nome=window.BRAND_NAME||"Vizio Barber";
   var accent=getComputedStyle(document.documentElement).getPropertyValue('--gold-2').trim()||"#5aa0ff";
   var logo=window.BRAND_LOGO||"vizio-symbol.png";
   document.getElementById('view').innerHTML=
@@ -84,7 +84,7 @@ function resetMarca(){ try{localStorage.removeItem(BKEY);}catch(e){}
 window.resetMarca=resetMarca;
 
 function salvarMarca(){
-  var nome=(document.getElementById('mk_nome')||{}).value||"Barber Premium";
+  var nome=(document.getElementById('mk_nome')||{}).value||"Vizio Barber";
   var accent=(document.getElementById('mk_accent')||{}).value||"#5aa0ff";
   var logo=window.__logoData||window.BRAND_LOGO||"vizio-symbol.png";
   var brand={nome:nome,accent:accent,logo:logo};
