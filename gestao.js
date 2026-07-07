@@ -65,10 +65,15 @@ function renderShop(){
     const itens=p.itens.map(i=>esc(prd(i.produtoId).nome)+(i.qtd>1?' ×'+i.qtd:'')).join(' + ');
     const idx=SHOP_FLOW.indexOf(p.status);
     const next=idx>=0&&idx<SHOP_FLOW.length-1?SHOP_FLOW[idx+1]:null;
+    const cl=cli(p.clienteId), _b=(WORK._cfg&&WORK._cfg.barbearia)||'Vizio Barber';
+    const waMsg=p.status==='Aguardando retirada'
+      ? 'Olá, '+((cl.nome||'').split(' ')[0])+'! Seu pedido na '+_b+' ('+itens+') está PRONTO para retirada. Pode passar quando quiser! 🛍'
+      : 'Olá, '+((cl.nome||'').split(' ')[0])+'! Recebemos seu pedido ('+itens+') na '+_b+'. Avisamos assim que estiver pronto para retirada. 🛍';
+    const waB=p.status!=='Retirado'?waBtn(cl.tel,waMsg)+' ':'';
     return '<tr><td>'+dtBR(p.data)+'</td><td><b>'+esc(cli(p.clienteId).nome)+'</b></td><td>'+itens+'</td>'+
      '<td>'+money(p.pagamento.valor)+'</td>'+
      '<td><span class="badge '+(p.status==='Retirado'?'b-ok':p.status==='Aguardando retirada'?'b-info':'b-warn')+'">'+esc(p.status)+'</span></td>'+
-     '<td style="text-align:right;white-space:nowrap">'+(next?'<button class="b b-sm" onclick="shopAvancar(\''+p.id+'\')">'+(next==='Retirado'?'✓ Entregar':next)+'</button>':'')+'</td></tr>';
+     '<td style="text-align:right;white-space:nowrap">'+waB+(next?'<button class="b b-sm" onclick="shopAvancar(\''+p.id+'\')">'+(next==='Retirado'?'✓ Entregar':next)+'</button>':'')+'</td></tr>';
   }).join('');
   const receita=WORK.pedidosShop.filter(p=>p.pagamento.status==='pago').reduce((s,p)=>s+p.pagamento.valor,0);
   document.getElementById('view').innerHTML=

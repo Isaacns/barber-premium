@@ -141,6 +141,7 @@ function renderAgenda(q){
     if(a.statusIdx<=2)acts.push('<button class="b b-sm" onclick="agSet(\''+a.id+'\',3)">Iniciar</button>');
     if(a.statusIdx===3)acts.push('<button class="b b-sm" onclick="agConcluir(\''+a.id+'\')">Concluir</button>');
     if(a.statusIdx<=2)acts.push('<button class="b b-danger b-sm" onclick="agSet(\''+a.id+'\',5)">No-show</button>');
+    if(a.statusIdx<4&&a.statusIdx!==5)acts.unshift(waBtn(c.tel,'Olá, '+((c.nome||'').split(' ')[0])+'! Confirmando seu horário na '+((typeof WORK!=='undefined'&&WORK._cfg&&WORK._cfg.barbearia)||'Vizio Barber')+': '+dtBR(a.data)+' às '+a.hora+' — '+s.nome+' com '+(b.apelido||b.nome)+'. Podemos confirmar? 💈','WhatsApp'));
     return '<tr><td><span class="hourchip">'+a.hora+'</span></td><td><b>'+esc(c.nome)+'</b><br><span style="color:var(--muted);font-size:11.5px">'+esc(s.nome)+'</span></td>'+
       '<td>'+esc(b.apelido||b.nome)+'</td>'+
       '<td>'+money(agValor(a))+(pg.descontoPct?'<br><span style="color:var(--ok);font-size:11px">-'+pg.descontoPct+'% '+(pg.forma==='antecipado'?'antecipado':'cadastro')+'</span>':'')+'</td>'+
