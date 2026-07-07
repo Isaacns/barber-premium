@@ -255,6 +255,15 @@ html:not(.theme-light) .badge.b-ok{color:var(--ok)}
 #pwaInstall{display:none;position:fixed;right:16px;bottom:16px;z-index:70;align-items:center;gap:7px;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));color:#fff;border:none;border-radius:99px;padding:11px 18px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 12px 30px var(--halo)}
 #pwaInstall:hover{transform:translateY(-2px)}
 #pwaInstall i{font-style:normal;font-size:16px;line-height:1}
+/* ===== Agenda do dia — cards (fácil na palma da mão) ===== */
+.agc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:13px 14px;border-radius:16px;background:var(--panel-2);border:1px solid var(--line);border-left:3px solid var(--gold-2);margin-bottom:10px}
+.agc-time{flex:none}
+.agc-body{flex:1;min-width:170px}
+.agc-cli{font-weight:700;font-size:14.5px}
+.agc-svc{font-size:12.5px;color:var(--muted);margin-top:2px}
+.agc-meta{font-size:12px;color:var(--muted);margin-top:7px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.agc-acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-left:auto}
+@media(max-width:640px){.agc-acts{margin-left:0;width:100%}.agc-acts>*{flex:1 1 auto;justify-content:center}}
 
 @media(max-width:860px){
   .grid2,.frow{grid-template-columns:1fr}
@@ -339,7 +348,7 @@ footer b{color:var(--gold-2)}
         <div class="avatar" id="avatar">BP</div>
       </div>
       <div id="view"></div>
-      <footer>Vizio Barber <b>v0.7.3 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
+      <footer>Vizio Barber <b>v0.7.4 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
     </main>
    </div>
   </section>
@@ -349,15 +358,15 @@ footer b{color:var(--gold-2)}
 <div id="agendar"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<script src="dados.js?v=071"></script>
-<script src="app.js?v=071"></script>
-<script src="gestao.js?v=071"></script>
-<script src="app-crud.js?v=071"></script>
-<script src="bemestar.js?v=071"></script>
-<script src="rbac.js?v=071"></script>
-<script src="theme.js?v=071"></script>
-<script src="tenants.js?v=071"></script>
-<script src="agendar.js?v=071"></script>
+<script src="dados.js?v=073"></script>
+<script src="app.js?v=073"></script>
+<script src="gestao.js?v=073"></script>
+<script src="app-crud.js?v=073"></script>
+<script src="bemestar.js?v=073"></script>
+<script src="rbac.js?v=073"></script>
+<script src="theme.js?v=073"></script>
+<script src="tenants.js?v=073"></script>
+<script src="agendar.js?v=073"></script>
 <script>
 /* ===== AURA · partículas vivas (padrão Sistema INPERSON, adaptado) ===== */
 (function(){
@@ -366,4 +375,39 @@ footer b{color:var(--gold-2)}
   var x=c.getContext('2d'),w,h,p;
   function rs(){w=c.width=innerWidth;h=c.height=innerHeight;
     p=Array.from({length:Math.min(70,(w*h)/24000)},function(){return {
-      x:Math.random()
+      x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4+.3,
+      s:Math.random()*.35+.08,o:Math.random()*.4+.12};});}
+  rs();addEventListener('resize',rs);
+  function star(){ // cor conforme o tema (AURA Clara = azul VIZIO · Noturna = azul claro)
+    return document.documentElement.classList.contains('theme-light')?'rgba(28,100,240,':'rgba(120,170,255,';}
+  (function loop(){x.clearRect(0,0,w,h);var col=star();
+    for(var i=0;i<p.length;i++){var s=p[i];s.y-=s.s;
+      if(s.y<0){s.y=h;s.x=Math.random()*w;}
+      x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fillStyle=col+s.o+')';x.fill();}
+    requestAnimationFrame(loop);})();
+})();
+</script>
+<script>
+/* mobile: fecha a sidebar ao escolher um item */
+(function(){var s=document.getElementById('side');if(s)s.addEventListener('click',function(e){if(e.target.closest('.nav a'))s.classList.remove('open');});})();
+</script>
+<button id="pwaInstall" onclick="instalarApp()" aria-label="Instalar app"><i>⤓</i> Instalar app</button>
+<script>
+/* ===== PWA: instalar app (iOS/Android) + service worker (network-first) ===== */
+(function(){ try{
+  if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js?v=073').catch(function(){}); }); }
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  var btn=document.getElementById('pwaInstall'); if(btn && !standalone) btn.style.display='inline-flex';
+  window.__pwaPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); window.__pwaPrompt=e; if(btn)btn.style.display='inline-flex'; });
+  window.instalarApp=function(){
+    if(window.__pwaPrompt){ window.__pwaPrompt.prompt(); window.__pwaPrompt.userChoice.finally(function(){ window.__pwaPrompt=null; if(btn)btn.style.display='none'; }); }
+    else { var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+      var msg=ios?'iPhone: toque em Compartilhar e "Adicionar à Tela de Início".':'Menu do navegador → "Instalar app" / "Adicionar à tela inicial".';
+      if(typeof toast==='function') toast(msg); else alert(msg); }
+  };
+  window.addEventListener('appinstalled',function(){ if(btn)btn.style.display='none'; });
+}catch(e){} })();
+</script>
+</body>
+</html>

@@ -142,20 +142,23 @@ function renderAgenda(q){
     if(a.statusIdx===3)acts.push('<button class="b b-sm" onclick="agConcluir(\''+a.id+'\')">Concluir</button>');
     if(a.statusIdx<=2)acts.push('<button class="b b-danger b-sm" onclick="agSet(\''+a.id+'\',5)">No-show</button>');
     if(a.statusIdx<4&&a.statusIdx!==5)acts.unshift(waBtn(c.tel,'Olá, '+((c.nome||'').split(' ')[0])+'! Confirmando seu horário na '+((typeof WORK!=='undefined'&&WORK._cfg&&WORK._cfg.barbearia)||'Vizio Barber')+': '+dtBR(a.data)+' às '+a.hora+' — '+s.nome+' com '+(b.apelido||b.nome)+'. Podemos confirmar? 💈','WhatsApp'));
-    return '<tr><td><span class="hourchip">'+a.hora+'</span></td><td><b>'+esc(c.nome)+'</b><br><span style="color:var(--muted);font-size:11.5px">'+esc(s.nome)+'</span></td>'+
-      '<td>'+esc(b.apelido||b.nome)+'</td>'+
-      '<td>'+money(agValor(a))+(pg.descontoPct?'<br><span style="color:var(--ok);font-size:11px">-'+pg.descontoPct+'% '+(pg.forma==='antecipado'?'antecipado':'cadastro')+'</span>':'')+'</td>'+
-      '<td><span class="badge '+(pg.status==='pago'?'b-ok':'b-warn')+'">'+(pg.status==='pago'?'Pago':'Pendente')+'</span></td>'+
-      '<td>'+agStatusBadge(a.statusIdx)+'</td>'+
-      '<td style="text-align:right;white-space:nowrap">'+acts.join(' ')+'</td></tr>';
+    const lc=['var(--warn)','var(--gold-2)','var(--warn)','var(--gold-2)','var(--ok)','var(--bad)','var(--dim)'][a.statusIdx]||'var(--gold-2)';
+    return '<div class="agc" style="border-left-color:'+lc+'">'+
+      '<div class="agc-time"><span class="hourchip">'+a.hora+'</span></div>'+
+      '<div class="agc-body"><div class="agc-cli">'+esc(c.nome)+'</div>'+
+        '<div class="agc-svc">'+esc(s.nome)+' · '+s.tempoMin+' min</div>'+
+        '<div class="agc-meta"><span>💈 '+esc(b.apelido||b.nome)+'</span><span>'+money(agValor(a))+(pg.descontoPct?' <b style="color:var(--ok)">-'+pg.descontoPct+'%</b>':'')+'</span>'+
+          '<span class="badge '+(pg.status==='pago'?'b-ok':'b-warn')+'">'+(pg.status==='pago'?'Pago':'Pendente')+'</span>'+agStatusBadge(a.statusIdx)+'</div></div>'+
+      '<div class="agc-acts">'+acts.join('')+'</div></div>';
   }).join('');
+  const done=list.filter(a=>a.statusIdx===4).length, pend=list.filter(a=>a.statusIdx<4&&a.statusIdx!==5).length;
   document.getElementById('view').innerHTML=
    '<div class="panel"><div class="head"><h3>🗓 Agenda — '+dtBR(t)+'</h3><div class="sp"></div>'+
-     '<button class="b b-sm" onclick="CRUD.novo(\'agenda\')">+ Novo agendamento</button></div>'+
-     '<div style="margin-bottom:10px">'+chips+'</div>'+
-     '<table class="tbl"><thead><tr><th>Hora</th><th>Cliente / Serviço</th><th>Barbeiro</th><th>Valor</th><th>Pgto</th><th>Status</th><th></th></tr></thead><tbody>'+
-     (rows||'<tr><td colspan="7" style="color:var(--muted)">Nenhum agendamento neste dia.</td></tr>')+'</tbody></table>'+
-     '<div style="font-size:11.5px;color:var(--muted);margin-top:10px">Tolerância de atraso: '+WORK._cfg.toleranciaMin+' min · Barbeiros recebem aviso '+WORK._cfg.lembreteBarbeiroMin+' min antes do próximo cliente.</div>'+
+     '<button class="b b-sm" onclick="CRUD.novo(\'agenda\')">+ Novo</button></div>'+
+     '<div style="display:flex;flex-wrap:wrap;margin-bottom:8px">'+chips+'</div>'+
+     '<div style="font-size:12px;color:var(--muted);margin:0 2px 12px">'+list.length+' agendamento(s) · <b style="color:var(--gold-2)">'+pend+'</b> pendente(s) · '+done+' concluído(s)</div>'+
+     (rows||'<div style="color:var(--muted);font-size:13px;padding:12px 0">Nenhum agendamento neste dia. 😌</div>')+
+     '<div style="font-size:11.5px;color:var(--muted);margin-top:8px">Aviso ao barbeiro '+WORK._cfg.lembreteBarbeiroMin+' min antes · tolerância de atraso '+WORK._cfg.toleranciaMin+' min.</div>'+
    '</div>';
 }
 function agSet(id,st){const a=byId(WORK.agenda,id);a.statusIdx=st;
