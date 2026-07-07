@@ -35,3 +35,10 @@ Go-live: implementar `providers.stripe|pix|mercadopago` e trocar `DADOS._cfg.gat
 `theme.js` (Camaleão + tema claro/escuro + logo por tema).
 
 Go-live: ver `../04_Documentos/GUIA-GO-LIVE.md`.
+
+
+## Changelog
+- v0.5.0 · AURA Azure — menu lateral (sidebar clara), tema azul-céu suave, logo VIZIO restaurada.
+
+- Changelog: v0.5.0 - sidebar clara + tema azul-ceu + logo VIZIO.
+- 
