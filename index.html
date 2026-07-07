@@ -190,7 +190,7 @@ html:not(.theme-light) .badge.b-ok{color:var(--ok)}
 .mact{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
 
 /* ===== ÁREA DO CLIENTE (portal AURA) ===== */
-#portal{position:relative;z-index:2;min-height:100vh;display:none;align-items:flex-start;justify-content:center;padding:30px 18px}
+#portal{position:fixed;inset:0;z-index:40;display:none;align-items:flex-start;justify-content:center;padding:30px 18px;overflow-y:auto}
 .pcard{width:100%;max-width:620px}
 .phead{text-align:center;margin-bottom:20px}
 .pbrand{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.5px;background:linear-gradient(135deg,var(--gold-2),#7C3AED 140%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:10px}
@@ -202,7 +202,7 @@ html:not(.theme-light) .badge.b-ok{color:var(--ok)}
 .star.on{filter:none;opacity:1;transform:scale(1.15)}
 
 /* ===== AGENDAMENTO ONLINE PÚBLICO (cliente agenda sozinho) ===== */
-#agendar{position:relative;z-index:3;min-height:100vh;display:none;align-items:flex-start;justify-content:center;padding:26px 16px}
+#agendar{position:fixed;inset:0;z-index:40;display:none;align-items:flex-start;justify-content:center;padding:26px 16px;overflow-y:auto}
 .agd-card{width:100%;max-width:460px}
 .agd-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .agd-back{width:34px;height:34px;flex:none;border-radius:11px;border:1px solid var(--line);background:var(--panel-2);color:var(--txt);font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
@@ -329,7 +329,7 @@ footer b{color:var(--gold-2)}
         <div class="avatar" id="avatar">BP</div>
       </div>
       <div id="view"></div>
-      <footer>Vizio Barber <b>v0.7.1 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
+      <footer>Vizio Barber <b>v0.7.2 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
     </main>
    </div>
   </section>
@@ -370,4 +370,4 @@ footer b{color:var(--gold-2)}
 </script>
 <script>
 /* mobile: fecha a sidebar ao escolher um item */
-(function(){var s=document.getElementById('side');if(s)s.addEventListener('click',function(e){if(e.target.closest('.nav a'))s.classList.remove('o
+(function(){var s=document.getElementById('side');if(s)s.addEventListener('click',function(e){if(e.target.closest('.nav a'))s.classList
