@@ -11,6 +11,11 @@ let WORK = JSON.parse(JSON.stringify(DADOS));
 let CUR = "home";
 let SESSION = null; // {user,nome,perfil,clienteId?,barbeiroId?}
 const money = v => "R$ "+(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+/* ===== PADRÃO INPERSON/VIZIO · botão WhatsApp (abre wa.me com mensagem pronta e personalizada) ===== */
+const WA_ICON='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 2a8 8 0 1 1-4.1 14.9l-.3-.2-2.6.7.7-2.5-.2-.3A8 8 0 0 1 12 4zm4.6 10.7c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7.9-.1.1-.3.2-.5.1-.7-.3-1.4-.7-2-1.5-.2-.3.2-.3.5-.9.1-.1 0-.3 0-.4 0-.1-.5-1.2-.7-1.6-.2-.4-.3-.4-.5-.4h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 3.9 3.4 1.5.6 2 .6 2.7.5.4-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1z"/></svg>';
+function waLink(tel,msg){ var d=(tel||'').replace(/\D/g,''); if(!d)return ''; if(d.length<=11)d='55'+d; return 'https://wa.me/'+d+(msg?'?text='+encodeURIComponent(msg):''); }
+function waBtn(tel,msg,label){ var u=waLink(tel,msg); if(!u)return '<span class="badge b-dim" title="Sem telefone cadastrado">sem telefone</span>'; return '<a class="b b-sm b-wa" href="'+u+'" target="_blank" rel="noopener">'+WA_ICON+(label||'WhatsApp')+' →</a>'; }
+function msgCliente(c){ var b=(typeof WORK!=='undefined'&&WORK._cfg&&WORK._cfg.barbearia)||'Vizio Barber'; var d=(typeof WORK!=='undefined'&&WORK._cfg&&WORK._cfg.descontoAntecipadoPct)||10; return 'Olá, '+((c.nome||'').split(' ')[0])+'! 👋 Aqui é da '+b+'. Vamos marcar seu próximo horário? Pagando antecipado, você garante '+d+'% de desconto. 💈'; }
 const byId = (arr,id)=>arr.find(x=>x.id===id)||{};
 const cli = id=>byId(WORK.clientes,id);
 const brb = id=>byId(WORK.barbeiros,id);
@@ -186,7 +191,7 @@ function renderClientes(q){
     return '<tr><td><b>'+esc(c.nome)+'</b><br><span style="color:var(--muted);font-size:11.5px">'+esc(c.tel||'')+'</span></td>'+
       '<td>'+(c.visitas||0)+'</td><td>'+(c.ultimaVisita?dtBR(c.ultimaVisita)+(d!=null?' <span style="color:var(--muted)">('+d+'d)</span>':''):'—')+'</td>'+
       '<td>'+(c.freqDias?('a cada ~'+c.freqDias+'d'):'—')+'</td><td>'+tags.join(' ')+'</td>'+
-      '<td style="text-align:right;white-space:nowrap"><button class="b b-ghost b-sm" onclick="CRUD.editar(\'clientes\',\''+c.id+'\')">✏️</button> <button class="b b-ghost b-sm" onclick="CRUD.del(\'clientes\',\''+c.id+'\')">🗑</button></td></tr>';
+      '<td style="text-align:right;white-space:nowrap">'+waBtn(c.tel,msgCliente(c))+' <button class="b b-ghost b-sm" onclick="CRUD.editar(\'clientes\',\''+c.id+'\')">✏️</button> <button class="b b-ghost b-sm" onclick="CRUD.del(\'clientes\',\''+c.id+'\')">🗑</button></td></tr>';
   }).join('');
   document.getElementById('view').innerHTML=
    '<div class="panel"><div class="head"><h3>🤝 Clientes</h3><div class="sp"></div>'+

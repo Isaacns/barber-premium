@@ -205,12 +205,13 @@ function renderAlavancagem(){
    '</div>'+
    '<div class="panel"><div class="head"><h3>🔔 Recuperação de clientes</h3><div class="sp"></div>'+
      (recupe.length?'<button class="b b-sm" onclick="alavDisparar('+recupe.length+')">Disparar campanha ('+recupe.length+')</button>':'')+'</div>'+
-     (recupe.map(c=>'<div class="alert"><div class="ai">💤</div><div class="at"><b>'+esc(c.nome)+'</b> — '+diasSem(c)+' dias sem visita.<br><span style="color:var(--muted);font-size:12px">“'+esc(msgRec(c))+'”</span></div></div>').join('')||
+     '<div style="font-size:12px;color:var(--muted);margin:2px 0 12px">Cada botão abre o WhatsApp com a mensagem pronta e personalizada.</div>'+
+     (recupe.map(c=>'<div class="alert" style="align-items:center"><div class="ai">💤</div><div class="at"><b>'+esc(c.nome)+'</b> — '+diasSem(c)+' dias sem visita.<br><span style="color:var(--muted);font-size:12px">“'+esc(msgRec(c))+'”</span></div><div style="flex:1"></div>'+waBtn(c.tel,msgRec(c))+'</div>').join('')||
       '<div style="color:var(--muted);font-size:13px">Ninguém sumido — base saudável. 👏</div>')+
    '</div>'+
    '<div class="panel"><div class="head"><h3>🎂 Aniversariantes do mês</h3><div class="sp"></div>'+
      (nivers.length?'<button class="b b-sm" onclick="alavDisparar('+nivers.length+')">Enviar felicitações</button>':'')+'</div>'+
-     (nivers.map(c=>'<div class="alert" style="border-left-color:var(--warn)"><div class="ai">🎂</div><div class="at"><b>'+esc(c.nome)+'</b> — '+dtBR(c.nasc).slice(0,5)+(aniversarioHoje(c)?' · <b style="color:var(--warn)">É HOJE!</b>':'')+'<br><span style="color:var(--muted);font-size:12px">“'+esc(msgNiver(c))+'”</span></div></div>').join('')||
+     (nivers.map(c=>'<div class="alert" style="border-left-color:var(--warn);align-items:center"><div class="ai">🎂</div><div class="at"><b>'+esc(c.nome)+'</b> — '+dtBR(c.nasc).slice(0,5)+(aniversarioHoje(c)?' · <b style="color:var(--warn)">É HOJE!</b>':'')+'<br><span style="color:var(--muted);font-size:12px">“'+esc(msgNiver(c))+'”</span></div><div style="flex:1"></div>'+waBtn(c.tel,msgNiver(c))+'</div>').join('')||
       '<div style="color:var(--muted);font-size:13px">Sem aniversariantes neste mês.</div>')+
    '</div>'+
    '<div class="panel"><h3>🚀 Combos & promoções sugeridas (pela frequência real)</h3>'+
@@ -219,7 +220,7 @@ function renderAlavancagem(){
      '<div class="alert"><div class="ai">💰</div><div class="at"><b>Antecipado '+WORK._cfg.descontoAntecipadoPct+'% off</b> — manter o incentivo: reduz no-show e garante caixa antes do atendimento.</div></div>'+
    '</div>';
 }
-function alavDisparar(n){toast('Campanha registrada para '+n+' cliente(s) — envio real (WhatsApp) entra no go-live ✓');}
+function alavDisparar(n){toast('Use o botão WhatsApp de cada cliente para enviar agora. Disparo em massa automático entra no go-live ✓');}
 
 /* ===== RELATÓRIOS (PDF elegante via impressão) ===== */
 function renderRelatorios(){
