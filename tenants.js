@@ -11,7 +11,7 @@
 const TENANTS={
   vini:{
     brand:{ nome:"VN Barber", accent:"#2F6BF0", logo:"vini-symbol.png" },
-    cfg:{ barbearia:"VN Barber", tel:"71 98888-7766", horaAbre:"09:00", horaFecha:"20:00" },
+    cfg:{ barbearia:"VN Barber", tel:"71 98245-1860", horaAbre:"09:00", horaFecha:"20:00" },
     servicos:[
       {id:"S1", nome:"Corte máquina",        preco:25, tempoMin:30, categoria:"Corte",     ativo:true},
       {id:"S2", nome:"Corte navalhado",      preco:30, tempoMin:40, categoria:"Corte",     ativo:true},

@@ -8,6 +8,12 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#17233D">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Vizio Barber">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -245,6 +251,10 @@ html:not(.theme-light) .badge.b-ok{color:var(--ok)}
 .agd-resumo span{color:var(--muted)}
 .agd-acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
 .agd-login-cta{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+/* ===== botão Instalar app (PWA) ===== */
+#pwaInstall{display:none;position:fixed;right:16px;bottom:16px;z-index:70;align-items:center;gap:7px;background:linear-gradient(135deg,var(--gold-2),var(--gold-4));color:#fff;border:none;border-radius:99px;padding:11px 18px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 12px 30px var(--halo)}
+#pwaInstall:hover{transform:translateY(-2px)}
+#pwaInstall i{font-style:normal;font-size:16px;line-height:1}
 
 @media(max-width:860px){
   .grid2,.frow{grid-template-columns:1fr}
@@ -329,7 +339,7 @@ footer b{color:var(--gold-2)}
         <div class="avatar" id="avatar">BP</div>
       </div>
       <div id="view"></div>
-      <footer>Vizio Barber <b>v0.7.2 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
+      <footer>Vizio Barber <b>v0.7.3 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
     </main>
    </div>
   </section>
@@ -356,18 +366,4 @@ footer b{color:var(--gold-2)}
   var x=c.getContext('2d'),w,h,p;
   function rs(){w=c.width=innerWidth;h=c.height=innerHeight;
     p=Array.from({length:Math.min(70,(w*h)/24000)},function(){return {
-      x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4+.3,
-      s:Math.random()*.35+.08,o:Math.random()*.4+.12};});}
-  rs();addEventListener('resize',rs);
-  function star(){ // cor conforme o tema (AURA Clara = azul VIZIO · Noturna = azul claro)
-    return document.documentElement.classList.contains('theme-light')?'rgba(28,100,240,':'rgba(120,170,255,';}
-  (function loop(){x.clearRect(0,0,w,h);var col=star();
-    for(var i=0;i<p.length;i++){var s=p[i];s.y-=s.s;
-      if(s.y<0){s.y=h;s.x=Math.random()*w;}
-      x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fillStyle=col+s.o+')';x.fill();}
-    requestAnimationFrame(loop);})();
-})();
-</script>
-<script>
-/* mobile: fecha a sidebar ao escolher um item */
-(function(){var s=document.getElementById('side');if(s)s.addEventListener('click',function(e){if(e.target.closest('.nav a'))s.classList
+      x:Math.random()
