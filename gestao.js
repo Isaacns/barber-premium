@@ -148,7 +148,7 @@ function renderNFe(){
     '<tr><td><b>#'+n.numero+'</b></td><td>'+dtBR(n.data)+'</td><td>'+esc(cli(n.clienteId).nome)+'</td>'+
     '<td>'+money(n.valor)+'</td><td>'+esc(n.tipo)+'</td>'+
     '<td><span class="badge '+(n.status==='Emitida'?'b-ok':'b-warn')+'">'+esc(n.status)+'</span></td>'+
-    '<td style="text-align:right;white-space:nowrap">'+(n.status!=='Emitida'?'<button class="b b-sm" onclick="nfeEmitir(\''+n.id+'\')">Emitir</button>':'<button class="b b-ghost b-sm" onclick="toast(\'DANFE simulado — provedor fiscal entra no go-live\')">DANFE</button>')+'</td></tr>').join('');
+    '<td style="text-align:right;white-space:nowrap">'+(n.status!=='Emitida'?'<button class="b b-sm" onclick="nfeEmitir(\''+n.id+'\')">Emitir</button>':waBtn(cli(n.clienteId).tel,'Olá, '+((cli(n.clienteId).nome||'').split(' ')[0])+'! Sua nota fiscal #'+n.numero+' da '+((WORK._cfg&&WORK._cfg.barbearia)||'Vizio Barber')+' ('+money(n.valor)+') foi emitida. Obrigado pela preferência! 🧾','Enviar nota')+' <button class="b b-ghost b-sm" onclick="toast(\'DANFE simulado — provedor fiscal entra no go-live\')">DANFE</button>')+'</td></tr>').join('');
   document.getElementById('view').innerHTML=
    '<div class="panel"><div class="head"><h3>🧾 Notas fiscais</h3><div class="sp"></div><button class="b b-sm" onclick="CRUD.novo(\'notas\')">+ Nova nota</button></div>'+
      '<table class="tbl"><thead><tr><th>Nº</th><th>Data</th><th>Cliente</th><th>Valor</th><th>Tipo</th><th>Status</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>'+

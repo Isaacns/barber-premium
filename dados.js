@@ -10,6 +10,7 @@ const DADOS = {
   _cfg:{
     produto:"Vizio Barber", barbearia:"Barbearia Demonstração",
     tagline:"Gestão premium para barbearias",
+    tel:"71 99999-0000",           // WhatsApp da barbearia (contato do cliente)
     descontoAntecipadoPct:10,      // incentivo por pagamento antecipado (garante o caixa)
     descontoCadastroPct:5,         // "cadastre-se e ganhe 5% no primeiro serviço"
     toleranciaMin:15,              // tolerância de atraso do cliente
@@ -25,10 +26,10 @@ const DADOS = {
   ],
 
   barbeiros:[
-    {id:"B1", nome:"Diego Costa",  apelido:"Diego",  comissaoPct:40, desde:"2023-02-01", ativo:true},
-    {id:"B2", nome:"Matheus Lima", apelido:"Teteu",  comissaoPct:40, desde:"2023-08-15", ativo:true},
-    {id:"B3", nome:"André Rocha",  apelido:"Dedé",   comissaoPct:45, desde:"2024-05-02", ativo:true},
-    {id:"B4", nome:"Vitor Nunes",  apelido:"VT",     comissaoPct:35, desde:"2025-11-10", ativo:true}
+    {id:"B1", nome:"Diego Costa",  apelido:"Diego",  tel:"71 98888-0001", comissaoPct:40, desde:"2023-02-01", ativo:true},
+    {id:"B2", nome:"Matheus Lima", apelido:"Teteu",  tel:"71 98888-0002", comissaoPct:40, desde:"2023-08-15", ativo:true},
+    {id:"B3", nome:"André Rocha",  apelido:"Dedé",   tel:"71 98888-0003", comissaoPct:45, desde:"2024-05-02", ativo:true},
+    {id:"B4", nome:"Vitor Nunes",  apelido:"VT",     tel:"71 98888-0004", comissaoPct:35, desde:"2025-11-10", ativo:true}
   ],
 
   servicos:[

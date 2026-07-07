@@ -233,7 +233,7 @@ function renderBarbeiros(){
     return '<tr><td><b>'+esc(b.nome)+'</b><br><span style="color:var(--muted);font-size:11.5px">'+esc(b.apelido||'')+' · desde '+dtBR(b.desde)+'</span></td>'+
       '<td>'+p.atend+'</td><td>'+money(p.receita)+'</td><td>'+money(p.comissao)+' <span style="color:var(--muted);font-size:11px">('+b.comissaoPct+'%)</span></td>'+
       '<td>'+money(p.gorjetas)+'</td><td>'+(p.nota?('⭐ '+p.nota.toFixed(1)+' <span style="color:var(--muted);font-size:11px">('+p.avals+')</span>'):'—')+'</td>'+
-      '<td style="text-align:right;white-space:nowrap"><button class="b b-ghost b-sm" onclick="CRUD.editar(\'barbeiros\',\''+b.id+'\')">✏️</button></td></tr>';
+      '<td style="text-align:right;white-space:nowrap">'+waBtn(b.tel,'Olá, '+(b.apelido||b.nome)+'! Aqui é a gestão da '+((typeof WORK!=='undefined'&&WORK._cfg&&WORK._cfg.barbearia)||'Vizio Barber')+'. ','WhatsApp')+' <button class="b b-ghost b-sm" onclick="CRUD.editar(\'barbeiros\',\''+b.id+'\')">✏️</button></td></tr>';
   }).join('');
   const fbRows=WORK.feedbacks.slice().sort((a,b)=>a.data<b.data?1:-1).slice(0,6).map(f=>
     '<div class="alert"><div class="ai">'+'⭐'.repeat(f.nota)+'</div><div class="at"><b>'+esc(cli(f.clienteId).nome)+'</b> sobre '+esc(brb(f.barbeiroId).apelido||brb(f.barbeiroId).nome)+' — “'+esc(f.comentario)+'” <span style="color:var(--muted)">('+dtBR(f.data)+')</span></div></div>').join('');
@@ -352,7 +352,7 @@ function renderPortalCliente(cid){
        '<div style="display:flex;gap:8px;justify-content:flex-start"><button class="b" onclick="pcAgendar(\''+cid+'\')">Agendar agora — '+WORK._cfg.descontoAntecipadoPct+'% off no pgto antecipado</button></div></div>'+
      '<div class="card-glass" style="padding:18px;margin-bottom:14px"><h3 style="margin:0 0 12px;font-family:var(--display);font-size:16px">💈 Suas últimas visitas</h3>'+(histRows||'<div style="color:var(--muted);font-size:13px">Sua primeira visita ainda está por vir. 😉</div>')+'</div>'+
      '<div class="card-glass" style="padding:18px;margin-bottom:14px"><h3 style="margin:0 0 12px;font-family:var(--display);font-size:16px">🛍 SHOP — pague aqui, retire na unidade</h3>'+shopCards+(pedRows?'<div style="margin-top:12px">'+pedRows+'</div>':'')+'</div>'+
-     '<div style="display:flex;justify-content:center;margin:10px 0 20px"><button class="b b-ghost b-sm" onclick="sair()">Sair</button></div>'+
+     '<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:10px 0 20px">'+waBtn(WORK._cfg.tel,'Olá! Aqui é '+c.nome+', cliente da '+WORK._cfg.barbearia+'. Gostaria de falar com vocês. 💈','Falar com a barbearia')+'<button class="b b-ghost b-sm" onclick="sair()">Sair</button></div>'+
      '<footer>'+esc(WORK._cfg.barbearia)+' · Vizio Barber — um produto <b>INPERSON</b></footer>'+
    '</div>';
   const ep=document.getElementById('emblemP'); if(ep){ep.innerHTML=emblemSVG(); if(ep.firstElementChild)ep.firstElementChild.style.maxWidth='76px';}
