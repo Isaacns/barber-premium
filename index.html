@@ -201,6 +201,51 @@ html:not(.theme-light) .badge.b-ok{color:var(--ok)}
 .star{font-size:26px;cursor:pointer;transition:.15s;filter:grayscale(1);opacity:.4}
 .star.on{filter:none;opacity:1;transform:scale(1.15)}
 
+/* ===== AGENDAMENTO ONLINE PÚBLICO (cliente agenda sozinho) ===== */
+#agendar{position:relative;z-index:3;min-height:100vh;display:none;align-items:flex-start;justify-content:center;padding:26px 16px}
+.agd-card{width:100%;max-width:460px}
+.agd-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.agd-back{width:34px;height:34px;flex:none;border-radius:11px;border:1px solid var(--line);background:var(--panel-2);color:var(--txt);font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.agd-back:hover{border-color:var(--gold-2);color:var(--gold-2)}
+.agd-brand{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-weight:800;font-size:15px;background:linear-gradient(135deg,var(--gold-2),#7C3AED 140%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.agd-prog{height:4px;border-radius:99px;background:var(--panel-2);overflow:hidden;margin-bottom:16px}
+.agd-prog>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-2),var(--gold-4));transition:width .3s}
+.agd-h{text-align:center;margin-bottom:14px}
+.agd-h h2{font-family:var(--display);font-weight:700;font-size:21px;margin:0}
+.agd-h p{color:var(--muted);font-size:12.5px;margin:4px 0 0}
+.agd-cat{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--dim);font-weight:700;margin:14px 2px 8px}
+.agd-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.agd-list{display:flex;flex-direction:column;gap:10px}
+.agd-opt{text-align:left;width:100%;background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:13px 15px;cursor:pointer;transition:.16s;color:var(--txt);backdrop-filter:blur(12px)}
+.agd-opt:hover{border-color:var(--gold-1);transform:translateY(-1px);box-shadow:0 8px 22px rgba(15,40,100,.12)}
+.agd-opt-t{font-weight:700;font-size:14px}
+.agd-opt-m{margin-top:6px;font-size:13px;color:var(--gold-2)}.agd-opt-m span{color:var(--muted);margin-left:4px}
+.agd-opt-s{font-size:12px;color:var(--muted);margin-top:2px}
+.agd-prof{display:flex;align-items:center;gap:12px}
+.agd-av{width:42px;height:42px;flex:none;border-radius:12px;background:var(--panel-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:14px;color:var(--gold-2)}
+.agd-pay{display:flex;align-items:center;gap:12px}.agd-pay.on{border-color:var(--gold-2);box-shadow:0 0 0 3px var(--halo)}
+.agd-pay>div:first-child{flex:1}
+.agd-radio{font-size:18px;color:var(--gold-2)}
+.agd-days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.agd-day{flex:none;width:60px;border-radius:14px;border:1px solid var(--line);background:var(--panel-2);color:var(--txt);padding:10px 0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.16s}
+.agd-day:hover{border-color:var(--gold-1)}
+.agd-day.on{background:linear-gradient(135deg,var(--gold-2),var(--gold-4));color:#fff;border-color:transparent}
+.agd-day-w{font-size:11px;font-weight:600}.agd-day-n{font-family:var(--display);font-weight:800;font-size:18px;line-height:1}.agd-day-m{font-size:10px;opacity:.7}
+.agd-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px}
+.slotchip{border-radius:11px;border:1px solid var(--line);background:var(--panel-2);color:var(--txt);padding:10px 0;font-family:var(--display);font-weight:700;font-size:13.5px;cursor:pointer;transition:.16s}
+.slotchip:hover{border-color:var(--gold-2);color:var(--gold-2);background:var(--halo)}
+.agd-empty{text-align:center;color:var(--muted);font-size:13px;padding:24px 0}
+.agd-ok{text-align:center}
+.agd-check{width:64px;height:64px;border-radius:50%;margin:6px auto 12px;background:rgba(22,185,129,.14);border:1px solid rgba(22,185,129,.4);color:var(--ok);font-size:32px;display:flex;align-items:center;justify-content:center}
+.agd-ok h2{font-family:var(--display);font-weight:700;font-size:22px;margin:0 0 4px}
+.agd-ok p{color:var(--muted);font-size:13px;margin:0 0 16px}
+.agd-resumo{text-align:left;background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:8px 16px;backdrop-filter:blur(12px)}
+.agd-resumo>div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.agd-resumo>div:last-child{border-bottom:none}
+.agd-resumo span{color:var(--muted)}
+.agd-acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.agd-login-cta{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+
 @media(max-width:860px){
   .grid2,.frow{grid-template-columns:1fr}
   .layout{display:block}
@@ -235,6 +280,7 @@ footer b{color:var(--gold-2)}
         </div>
         <button class="btn" type="submit">ENTRAR</button>
       </form>
+      <div class="agd-login-cta"><button type="button" class="b b-ghost" style="width:100%" onclick="abrirAgendamento()">Sou cliente — agendar meu horário</button></div>
       <div class="hint">Demo — perfis: <b>admin</b> · <b>gerente</b> · <b>barbeiro</b> · <b>cliente</b> (senha livre)</div>
       <div class="seal">powered by <b>Vizio Barber</b> — um produto INPERSON</div>
     </div>
@@ -283,22 +329,24 @@ footer b{color:var(--gold-2)}
         <div class="avatar" id="avatar">BP</div>
       </div>
       <div id="view"></div>
-      <footer>Vizio Barber <b>v0.6.3 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
+      <footer>Vizio Barber <b>v0.7.0 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
     </main>
    </div>
   </section>
 </div>
 <div id="modal-root"></div>
 <div id="portal"></div>
+<div id="agendar"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<script src="dados.js?v=062"></script>
-<script src="app.js?v=062"></script>
-<script src="gestao.js?v=062"></script>
-<script src="app-crud.js?v=062"></script>
-<script src="bemestar.js?v=062"></script>
-<script src="rbac.js?v=062"></script>
-<script src="theme.js?v=062"></script>
+<script src="dados.js?v=070"></script>
+<script src="app.js?v=070"></script>
+<script src="gestao.js?v=070"></script>
+<script src="app-crud.js?v=070"></script>
+<script src="bemestar.js?v=070"></script>
+<script src="rbac.js?v=070"></script>
+<script src="theme.js?v=070"></script>
+<script src="agendar.js?v=070"></script>
 <script>
 /* ===== AURA · partículas vivas (padrão Sistema INPERSON, adaptado) ===== */
 (function(){
