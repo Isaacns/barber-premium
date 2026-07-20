@@ -1,6 +1,6 @@
 /* Vizio Barber · Service Worker (PWA) — network-first para evitar cache velho.
    Mantém um shell mínimo em cache só para fallback offline. */
-const CACHE='vb-v080';
+const CACHE='vb-v081';
 const CORE=['./','./index.html','./icon-192.png','./icon-512.png','./manifest.json'];
 self.addEventListener('install',function(e){
   self.skipWaiting();

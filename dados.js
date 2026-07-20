@@ -16,7 +16,9 @@ const DADOS = {
     toleranciaMin:15,              // tolerância de atraso do cliente
     lembreteBarbeiroMin:15,        // notificação ao barbeiro antes do próximo cliente
     recuperacaoDias:35,            // dias sem visita → cliente entra na recuperação
-    gateway:"simulado"             // simulado | stripe | pix | mercadopago (plugável)
+    gateway:"simulado",            // simulado | stripe | pix | mercadopago (plugável)
+    horaAbre:"09:00", horaFecha:"20:00",
+    diasSemana:[1,2,3,4,5,6]       // §16: barbearia atende sábado — é configuração, não código
   },
   _users:[
     {user:"admin",   nome:"Isaac Nogueira", perfil:"admin",    roleLabel:"Administrador"},
@@ -131,5 +133,38 @@ const DADOS = {
     {id:"N1", numero:128, data:"2026-07-03", clienteId:"C1", valor:108.00, tipo:"NFC-e", status:"Emitida", chave:"29260703demo000128"},
     {id:"N2", numero:129, data:"2026-07-04", clienteId:"C4", valor:129.00, tipo:"NFC-e", status:"Emitida", chave:"29260704demo000129"},
     {id:"N3", numero:130, data:"2026-07-05", clienteId:"C2", valor:134.00, tipo:"NFC-e", status:"Pendente", chave:""}
-  ]
+  ],
+
+  /* Quadro de tarefas da Agenda (§16): o que a barbearia precisa fazer além de atender.
+     status 0=Pendente 1=Em andamento 2=Concluída · inicio/fim cronometram cada etapa. */
+  tarefas:[
+    {id:"T1", titulo:"Repor lâminas e toalhas",        respId:"B1", status:0, criado:"2026-07-20T08:00:00.000Z", inicio:null, fim:null, hist:[]},
+    {id:"T2", titulo:"Conferir caixa do dia anterior", respId:"",   status:0, criado:"2026-07-20T08:05:00.000Z", inicio:null, fim:null, hist:[]},
+    {id:"T3", titulo:"Higienizar máquinas e pentes",   respId:"B2", status:1, criado:"2026-07-20T08:10:00.000Z", inicio:"2026-07-20T11:20:00.000Z", fim:null, hist:[]},
+    {id:"T4", titulo:"Postar antes/depois no Instagram",respId:"B3",status:0, criado:"2026-07-20T08:15:00.000Z", inicio:null, fim:null, hist:[]},
+    {id:"T5", titulo:"Abrir a loja e ligar o som",     respId:"B1", status:2, criado:"2026-07-20T07:50:00.000Z", inicio:"2026-07-20T11:45:00.000Z", fim:"2026-07-20T12:00:00.000Z", hist:[]}
+  ],
+
+  /* Trilha de alterações (quem, quando, de onde para onde) — §15 */
+  _trilha:[]
 };
+
+/* ===== DEMONSTRAÇÃO SEMPRE VIVA =====
+   Os dados de exemplo nasceram ancorados em 05/07/2026. Sem este ajuste, toda
+   demonstração feita depois dessa data abre com a agenda vazia — e sistema vazio
+   não vende. Deslocamos as datas de exemplo para a semana atual preservando os
+   intervalos entre elas (inclusive `ultimaVisita`, para o radar de recuperação
+   continuar mostrando os mesmos clientes sumidos). Quando entrar backend real
+   com dados do cliente, este bloco sai. */
+(function(){
+  var BASE="2026-07-05";
+  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  var hoje=new Date(); hoje.setHours(12,0,0,0);
+  var delta=Math.round((hoje-new Date(BASE+"T12:00:00"))/86400000);
+  if(delta<=0) return;
+  function mover(s){ if(!s)return s; var d=new Date(s+"T12:00:00"); d.setDate(d.getDate()+delta); return iso(d); }
+  ["agenda","financeiro","notas","feedbacks","pedidosShop"].forEach(function(k){
+    (DADOS[k]||[]).forEach(function(r){ if(r.data)r.data=mover(r.data); });
+  });
+  (DADOS.clientes||[]).forEach(function(c){ if(c.ultimaVisita)c.ultimaVisita=mover(c.ultimaVisita); });
+})();
