@@ -14,6 +14,16 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Vizio Barber">
+<script>
+/* Guarda de HTTPS com exceção de loopback (§14 / rollout §3.4) — sem a exceção,
+   é impossível testar em localhost (o redirect derruba o servidor local). */
+(function(){
+  var local=/^(localhost|127\.0\.0\.1|\[::1\]|::1)$/.test(location.hostname);
+  if(location.protocol==='http:' && !local){
+    location.replace('https://'+location.host+location.pathname+location.search+location.hash);
+  }
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -348,7 +358,7 @@ footer b{color:var(--gold-2)}
         <div class="avatar" id="avatar">BP</div>
       </div>
       <div id="view"></div>
-      <footer>Vizio Barber <b>v0.7.4 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
+      <footer>Vizio Barber <b id="appVer">v0.8.0 · AURA</b> · O seu negócio na palma da mão. — um produto <b>INPERSON</b></footer>
     </main>
    </div>
   </section>
@@ -358,15 +368,15 @@ footer b{color:var(--gold-2)}
 <div id="agendar"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<script src="dados.js?v=073"></script>
-<script src="app.js?v=073"></script>
-<script src="gestao.js?v=073"></script>
-<script src="app-crud.js?v=073"></script>
-<script src="bemestar.js?v=073"></script>
-<script src="rbac.js?v=073"></script>
-<script src="theme.js?v=073"></script>
-<script src="tenants.js?v=073"></script>
-<script src="agendar.js?v=073"></script>
+<script src="dados.js?v=080"></script>
+<script src="app.js?v=080"></script>
+<script src="gestao.js?v=080"></script>
+<script src="app-crud.js?v=080"></script>
+<script src="bemestar.js?v=080"></script>
+<script src="rbac.js?v=080"></script>
+<script src="theme.js?v=080"></script>
+<script src="tenants.js?v=080"></script>
+<script src="agendar.js?v=080"></script>
 <script>
 /* ===== AURA · partículas vivas (padrão Sistema INPERSON, adaptado) ===== */
 (function(){
@@ -395,7 +405,8 @@ footer b{color:var(--gold-2)}
 <script>
 /* ===== PWA: instalar app (iOS/Android) + service worker (network-first) ===== */
 (function(){ try{
-  if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js?v=073').catch(function(){}); }); }
+  /* O service worker é registrado pelo bloco do PUSH (§14) — uma única rota de registro,
+     para o push manter a referência (reg) e poder mandar PULAR_ESPERA. */
   var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
   var btn=document.getElementById('pwaInstall'); if(btn && !standalone) btn.style.display='inline-flex';
   window.__pwaPrompt=null;
@@ -408,6 +419,81 @@ footer b{color:var(--gold-2)}
   };
   window.addEventListener('appinstalled',function(){ if(btn)btn.style.display='none'; });
 }catch(e){} })();
+</script>
+<script>
+/* VERSÃO DO APP — bumpar a CADA deploy. É por este número que o push compara. */
+window.APP_VERSION = '0.8.0';   /* §14.2: nunca const */
+
+/* PUSH DE ATUALIZAÇÃO — padrão VIZIO §14.
+   Publicar não é entregar: entregue é quando o código novo roda no navegador do cliente.
+   Sem guard de document.hidden de propósito — aba em segundo plano é o caso a pegar. */
+(function(){
+  var avisou=false, checando=false, reg=null;
+
+  /* uma versão só, uma fonte só (§14.2): o rodapé mostra o mesmo número que o push compara */
+  try{ var fv=document.getElementById('appVer'); if(fv) fv.textContent='v'+window.APP_VERSION+' · AURA'; }catch(_){}
+
+  function avisarNovaVersao(){
+    if(avisou) return; avisou=true;
+    var b=document.createElement('button');
+    b.type='button'; b.id='vzUpdate';
+    b.innerHTML='✨ Uma versão novinha do sistema está pronta. <b>Atualizar agora</b>';
+    b.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(8px);'
+      +'z-index:9999;display:inline-flex;align-items:center;gap:10px;white-space:nowrap;'
+      +'padding:12px 18px;border:none;border-radius:14px;cursor:pointer;font:inherit;font-size:.9rem;'
+      +'color:#fff;font-weight:600;'
+      /* identidade do Vizio Barber: escala de acento --gold-2 → --gold-4 (Camaleão troca por tenant) */
+      +'background:linear-gradient(135deg,var(--gold-2,#1C64F0),var(--gold-4,#0F3E9E));'
+      +'box-shadow:0 12px 30px -10px rgba(0,0,0,.55);opacity:0;'
+      +'transition:opacity .35s,transform .35s;max-width:92vw';
+    b.onclick=function(){
+      b.textContent='Atualizando…'; b.disabled=true;
+      try{ if(reg&&reg.waiting) reg.waiting.postMessage({type:'PULAR_ESPERA'}); }catch(_){}
+      try{ sessionStorage.clear(); }catch(_){}
+      location.replace(location.pathname+'?v='+Date.now()+location.hash);
+    };
+    document.body.appendChild(b);
+    requestAnimationFrame(function(){ b.style.opacity='1'; b.style.transform='translateX(-50%) translateY(0)'; });
+  }
+
+  /* rota 1 — service worker (o Vizio Barber tem sw.js) */
+  if('serviceWorker' in navigator){
+    window.addEventListener('load',function(){
+      navigator.serviceWorker.register('sw.js').then(function(r){
+        reg=r;
+        if(r.waiting&&navigator.serviceWorker.controller) avisarNovaVersao();
+        r.addEventListener('updatefound',function(){
+          var novo=r.installing; if(!novo) return;
+          novo.addEventListener('statechange',function(){
+            if(novo.state==='installed'&&navigator.serviceWorker.controller) avisarNovaVersao();
+          });
+        });
+      }).catch(function(){});
+    });
+  }
+
+  /* rota 2 — APP_VERSION por rede. Pega o deploy que mexeu SÓ no index.html
+     (nesse caso o sw.js não muda, o 'updatefound' não dispara e ninguém seria avisado). */
+  function checarVersao(){
+    if(checando||avisou) return; checando=true;
+    var base=location.href.replace(/[#?].*$/,'');
+    fetch(base+'?_v='+Date.now(),{cache:'no-store'})
+      .then(function(r){ return r.ok?r.text():null; })
+      .then(function(t){
+        if(!t) return;
+        var m=t.match(/APP_VERSION\s*=\s*'([^']+)'/);
+        if(m&&m[1]&&m[1]!==window.APP_VERSION) avisarNovaVersao();
+      })
+      .catch(function(){})
+      .then(function(){ checando=false; });
+  }
+  setTimeout(checarVersao,8000);
+  setInterval(checarVersao,10*60*1000);
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden){ checarVersao(); if(reg) reg.update().catch(function(){}); }
+  });
+  window.addEventListener('online',function(){ if(reg) reg.update().catch(function(){}); });
+})();
 </script>
 </body>
 </html>
