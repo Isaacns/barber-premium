@@ -423,7 +423,7 @@ footer b{color:var(--gold-2)}
 </script>
 <script>
 /* VERSÃO DO APP — bumpar a CADA deploy. É por este número que o push compara. */
-window.APP_VERSION = '0.8.1';   /* §14.2: nunca const */
+window.APP_VERSION = '0.8.2';   /* §14.2: nunca const */
 
 /* PUSH DE ATUALIZAÇÃO — padrão VIZIO §14.
    Publicar não é entregar: entregue é quando o código novo roda no navegador do cliente.
@@ -454,7 +454,11 @@ window.APP_VERSION = '0.8.1';   /* §14.2: nunca const */
       location.replace(location.pathname+'?v='+Date.now()+location.hash);
     };
     document.body.appendChild(b);
-    requestAnimationFrame(function(){ b.style.opacity='1'; b.style.transform='translateX(-50%) translateY(0)'; });
+    /* §3.6 — requestAnimationFrame NÃO roda em aba oculta: sozinho, o banner nasce
+       com opacity:0 e quem está em segundo plano (o caso que o push existe para pegar)
+       não vê nada até focar a aba. O setTimeout redundante garante a transição. */
+    var mostrar=function(){ b.style.opacity='1'; b.style.transform='translateX(-50%) translateY(0)'; };
+    requestAnimationFrame(mostrar); setTimeout(mostrar,60);
   }
 
   /* rota 1 — service worker (o Vizio Barber tem sw.js) */
